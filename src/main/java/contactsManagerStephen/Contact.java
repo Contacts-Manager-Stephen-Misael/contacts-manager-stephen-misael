@@ -24,7 +24,7 @@ public class Contact {
     }
 
     public String toFileString() {
-        return String.format("%s,%s,%s", firstName, lastName, formatPhoneNumber(phoneNumber));
+        return String.format("%s,%s,%s", firstName, lastName, phoneNumber);
     }
 
     public static Contact fromFileString(String fileContact) {

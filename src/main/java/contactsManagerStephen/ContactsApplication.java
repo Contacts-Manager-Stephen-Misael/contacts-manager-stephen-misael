@@ -27,15 +27,16 @@ public class ContactsApplication {
 
     private static void getContactInfoFromFile() {
         List<String> contactList = new ArrayList<>();
-        Path contactFile = Paths.get("/Users/stephentalbot/IdeaProjects/contacts-manager-stephen-misael/contacts.txt");
+        Path contactFile = Paths.get("./contacts-manager-stephen-misael/contacts.txt");
         try {
-            Files.write(contactFile, contactList);
             List<String> fileStrings = Files.readAllLines(contactFile);
             for (int i = 0; i < fileStrings.size(); i++) {
-                System.out.println();
+
             }
         } catch (IOException e) {
             System.out.println("file read exception: " + e.getMessage());
         }
     }
+
+
 }

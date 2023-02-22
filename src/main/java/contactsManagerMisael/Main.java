@@ -6,9 +6,6 @@ public class Main {
     public static void main(String[] args) {
         ContactsApp contactsApp = new ContactsApp();
         contactsApp.run();
-
-        Contact contact = new Contact("Steve", "6666666666");
-        contact.getPhoneNumber();
     }
 }
 
