@@ -9,6 +9,26 @@ public class ContactsMenu {
         this.scanner = new Scanner(System.in);
     }
 
+
+
+
+
+//
+//    public int showMainMenu() {
+//        System.out.println("1. View contacts.");
+//        System.out.println("2. Add a new contact.");
+//        System.out.println("3. Search a contact by name.");
+//        System.out.println("4. Delete an existing contact.");
+//        System.out.println("5. Exit.");
+//        System.out.print("Enter an option (1, 2, 3, 4 or 5): ");
+//        return scanner.nextInt();
+//    }
+
+
+
+
+
+
     public int showMainMenu() {
         System.out.println("1. View contacts.");
         System.out.println("2. Add a new contact.");
@@ -16,8 +36,16 @@ public class ContactsMenu {
         System.out.println("4. Delete an existing contact.");
         System.out.println("5. Exit.");
         System.out.print("Enter an option (1, 2, 3, 4 or 5): ");
-        return scanner.nextInt();
+        String input = scanner.nextLine();
+        while (!input.matches("[1-5]")) {
+            System.out.println("Invalid input. Please enter a number between 1 and 5.");
+            System.out.print("Enter an option (1, 2, 3, 4 or 5): ");
+//            input = scanner.nextLine();
+        }
+        return Integer.parseInt(input);
     }
+
+
 
     public Contact getNewContactInfo() {
         scanner.nextLine();
@@ -70,3 +98,9 @@ public class ContactsMenu {
 //The Scanner object is used to get user input from the console.
 // The nextLine() method is called to consume the end-of-line character after the user enters a value,
 // which allows subsequent nextLine() calls to function properly.
+
+
+
+
+
+
