@@ -1,6 +1,5 @@
 package contactsManagerMisael;
 
-
 public class Contact {
     private final String name;
     private String phoneNumber;

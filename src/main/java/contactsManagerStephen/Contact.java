@@ -8,6 +8,10 @@ public class Contact {
     public Contact() {
     }
 
+    public Contact(String firstName) {
+        this.firstName = firstName;
+    }
+
     public Contact(String firstName, String lastName, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -17,6 +21,18 @@ public class Contact {
     @Override
     public String toString() {
         return String.format("%s %s %s", firstName, lastName, formatPhoneNumber(phoneNumber));
+    }
+
+    public String toFileString() {
+        return String.format("%s,%s,%s", firstName, lastName, formatPhoneNumber(phoneNumber));
+    }
+
+    public static Contact fromFileString(String fileContact) {
+        String[] contactPieces = fileContact.split(",");
+        Contact contact = new Contact(contactPieces[0]);
+        contact.setLastName(contactPieces[1]);
+        contact.setPhoneNumber(contactPieces[2]);
+        return contact;
     }
 
     public String formatPhoneNumber(String phoneNumber) {
