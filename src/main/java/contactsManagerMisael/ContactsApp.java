@@ -26,7 +26,7 @@ public class ContactsApp {
                     Contact newContact = contactsMenu.getNewContactInfo();
                     contactsManager.addContact(newContact);
                     clearConsole();
-                    System.out.println("Contact added successfully!");
+//                    System.out.println("Contact added successfully!");
                 }
                 case 3 -> {
                     String searchQuery = contactsMenu.getSearchQuery();
