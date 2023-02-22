@@ -5,7 +5,7 @@ import util.Input;
 
 public class TestMain {
     public static void main(String[] args) {
-        System.out.println("Hello");
-        Input input = new Input();
+//        Contact Stephen = new Contact("Stephen", "Talbot", "2672752477");
+//        System.out.println(Stephen);
     }
 }
