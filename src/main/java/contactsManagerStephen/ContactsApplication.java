@@ -24,7 +24,5 @@ public class ContactsApplication {
 
     private static void getContactInfoFromFile() {
         String fileName = "contacts.txt";
-
-        Path Files.write(Path)
     }
 }
