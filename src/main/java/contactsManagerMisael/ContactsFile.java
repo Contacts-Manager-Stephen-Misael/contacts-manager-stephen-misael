@@ -1,5 +1,7 @@
 package contactsManagerMisael;
 
+import colors.Colors;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ public class ContactsFile {
             }
         } catch (IOException e) {
             System.out.println("An error occurred while reading the contacts file: " + e.getMessage());
+            System.out.println(Colors.red + "The contact could not be found." + Colors.reset + e.getMessage());
         }
         return contacts;
     }
@@ -37,7 +40,10 @@ public class ContactsFile {
             }
             writer.close();
         } catch (IOException e) {
-            System.out.println("An error occurred while writing to the contacts file: " + e.getMessage());
+//            System.out.println("An error occurred while writing to the contacts file: " + e.getMessage());
+            System.out.println(Colors.red + "An error occurred while writing to the contacts file:" + Colors.reset + e.getMessage());
+
+
         }
     }
 }

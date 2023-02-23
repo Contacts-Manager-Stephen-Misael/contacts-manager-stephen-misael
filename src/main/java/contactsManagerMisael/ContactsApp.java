@@ -1,4 +1,6 @@
 package contactsManagerMisael;
+import colors.Colors;
+
 import java.util.Scanner;
 
 
@@ -38,9 +40,13 @@ public class ContactsApp {
                     Contact contactToDelete = contactsMenu.getContactToDelete();
                     if (contactsManager.deleteContact(contactToDelete)) {
                         clearConsole();
-                        System.out.println("Contact deleted successfully!");
+//                        System.out.println("Contact deleted successfully!");
+                        System.out.println(Colors.red + "Contact deleted successfully!" + Colors.reset);
+
                     } else {
-                        System.out.println("The contact could not be found.");
+//                        System.out.println("The contact could not be found.");
+                        System.out.println(Colors.red + "The contact could not be found." + Colors.reset);
+
                     }
                 }
                 default -> System.out.println("Invalid option.");
