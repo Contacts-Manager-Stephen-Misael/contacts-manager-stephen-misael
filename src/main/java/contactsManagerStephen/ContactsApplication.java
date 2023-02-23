@@ -13,9 +13,7 @@ import java.util.List;
 public class ContactsApplication {
     private static Input input = new Input();
     private static final String contactsFilePath = ("contacts.txt");
-
     private static ArrayList<Contact> contactObjectList = new ArrayList<>();
-
     private static List<String> contactStringList = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -27,6 +25,8 @@ public class ContactsApplication {
         doUserChoice();
     }
 
+
+    ///////////METHODS USED TO GET THE DATA FROM THE FILE AND DISPLAY IT ON THE PAGE//////////
     private static void checkContactsFile() {
         Path contactFile = Paths.get(contactsFilePath);
         try {
@@ -52,24 +52,28 @@ public class ContactsApplication {
         }
     }
 
-    private static void printContacts() {
-        System.out.println("Your Contacts!");
-        for (Contact contact : contactObjectList) {
-            System.out.println(contact);
-        }
-        System.out.println();
-    }
 
+    private static void printContacts() {
+        System.out.println("""
+                Name               |Phone Number     |
+                -------------------------------------|""");
+        for (Contact contact : contactObjectList) {
+            System.out.format("%s %s    | %s     |%n", contact.getFirstName(), contact.getLastName(), contact.formatPhoneNumber(contact.getPhoneNumber()));
+        }
+        System.out.println("--------------------------------------");
+    }
 
     private static void printMenu() {
         System.out.println("""
                 1. View Contacts
                 2. Add a new contact
                 3. Search contact by name
-                4. Delete and existing contact
+                4. Delete an existing contact
                 5. Exit\n""");
     }
 
+
+    ////////////DO USER CHOICE CONTAINS ALL THE "ACTION" METHODS BY THE USER///////////////
     private static void doUserChoice() {
         while (true) {
             printMenu();
@@ -79,9 +83,10 @@ public class ContactsApplication {
                 case 1 -> printContacts();
                 case 2 -> addNewContact();
                 case 3 -> searchContacts();
-                case 4 -> System.out.println("delete existing contact");
+                //edit delete method so that the user can type and THEN is given a list of options if duplicate
+                case 4 -> deleteContact();
                 case 5 -> {
-                    System.out.println("exit and save to contacts file");
+                    reWriteContactsFile();
                     System.exit(0);
                 }
             }
@@ -104,7 +109,7 @@ public class ContactsApplication {
     }
 
     private static void searchContacts() {
-        String userSearch = input.getString("Search for a user by name: ");
+        String userSearch = input.getString("Search for a user by name or phone number:");
         for (Contact contact : contactObjectList) {
             if (contact.getFirstName().equals(userSearch)) {
                 System.out.println(contact);
@@ -118,6 +123,39 @@ public class ContactsApplication {
     }
 
     private static void deleteContact() {
+        if (contactObjectList.size() > 0) {
+            //prints list of contacts with numbers
+            int i = 1;
+            System.out.println("~~Existing contacts to choose from~~");
+            for (Contact contact : contactObjectList) {
+                System.out.format("%d. %s%n", i++, contact);
+            }
 
+            //deletes contact based on index of object:ist of Contacts
+            int userDelete = input.getInt(1, contactObjectList.size(), "Choose number to delete: ");
+            if (input.yesNo("Confirm Delete [Y/N]: ")) {
+                contactObjectList.remove(userDelete - 1);
+            } else {
+                System.out.println("No more contacts to delete!");
+            }
+        } else {
+            System.out.println("No existing contacts to delete\n");
+        }
     }
+
+
+    ///////////METHODS USED TO GET THE DATA FROM THE ARRAY LIST AND OVERWRITE THE FILE//////////
+    public static void reWriteContactsFile() {
+        ArrayList<String> contactStringList2 = new ArrayList<>();
+        for (Contact contact : contactObjectList) {
+            contactStringList2.add(contact.toFileString());
+        }
+
+        try {
+            Files.write(Path.of(contactsFilePath), contactStringList2);
+        } catch (IOException e) {
+            System.out.println("Did not re-write.");
+        }
+    }
+
 }

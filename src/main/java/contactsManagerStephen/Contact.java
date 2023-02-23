@@ -45,7 +45,7 @@ public class Contact {
     public String formatPhoneNumber(String phoneNumber) {
         String first3 = phoneNumber.substring(0, 3);
         String second3 = phoneNumber.substring(3, 6);
-        String last4 = phoneNumber.substring(6,9);
+        String last4 = phoneNumber.substring(6,10);
         return first3 + "-" + second3 + "-" + last4;
     }
 
