@@ -26,6 +26,7 @@ public class ContactsApplication {
         //shows main menu and give user options and perform user choice
         doUserChoice();
     }
+
     private static void checkContactsFile() {
         Path contactFile = Paths.get(contactsFilePath);
         try {
@@ -53,7 +54,7 @@ public class ContactsApplication {
 
     private static void printContacts() {
         System.out.println("Your Contacts!");
-        for (Contact contact: contactObjectList) {
+        for (Contact contact : contactObjectList) {
             System.out.println(contact);
         }
         System.out.println();
@@ -73,10 +74,11 @@ public class ContactsApplication {
         while (true) {
             printMenu();
             int userChoice = input.getInt(1, 5, "Enter your numeric option (1-5): ");
+            System.out.println();
             switch (userChoice) {
                 case 1 -> printContacts();
                 case 2 -> addNewContact();
-                case 3 -> System.out.println("search by name");
+                case 3 -> searchContacts();
                 case 4 -> System.out.println("delete existing contact");
                 case 5 -> {
                     System.out.println("exit and save to contacts file");
@@ -91,7 +93,7 @@ public class ContactsApplication {
         String userFirstName = input.getString("Enter first name: ");
         String userLastName = input.getString("Enter last name: ");
         String userPhoneNum = input.getString("Enter 10 digit phone number e.g 5555555555");
-        if(userFirstName.equals("")) {
+        if (userFirstName.equals("")) {
             userContact = new Contact(userFirstName, userPhoneNum);
         } else if (userLastName.equals("")) {
             userContact = new Contact(userLastName, userPhoneNum);
@@ -99,5 +101,23 @@ public class ContactsApplication {
             userContact = new Contact(userFirstName, userLastName, userPhoneNum);
         }
         contactObjectList.add(userContact);
+    }
+
+    private static void searchContacts() {
+        String userSearch = input.getString("Search for a user by name: ");
+        for (Contact contact : contactObjectList) {
+            if (contact.getFirstName().equals(userSearch)) {
+                System.out.println(contact);
+            } else if (contact.getLastName().equals(userSearch)) {
+                System.out.println(contact);
+            } else if (contact.getPhoneNumber().equals(userSearch)) {
+                System.out.println(contact);
+            }
+        }
+        System.out.println();
+    }
+
+    private static void deleteContact() {
+
     }
 }
