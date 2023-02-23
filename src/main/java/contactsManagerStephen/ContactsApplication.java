@@ -81,7 +81,9 @@ public class ContactsApplication {
             System.out.println();
             switch (userChoice) {
                 case 1 -> printContacts();
+                //add verification if contact already exists
                 case 2 -> addNewContact();
+                //add verification to search if the person does not exist
                 case 3 -> searchContacts();
                 //edit delete method so that the user can type and THEN is given a list of options if duplicate
                 case 4 -> deleteContact();
