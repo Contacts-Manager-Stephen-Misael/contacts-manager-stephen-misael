@@ -25,7 +25,9 @@ public class Contact {
 
     @Override
     public String toString() {
-        return String.format("%s %s %s", firstName, lastName, formatPhoneNumber(phoneNumber));
+        String userString;
+        userString = String.format("%s %s %s", firstName, lastName, formatPhoneNumber(phoneNumber));
+        return userString;
     }
 
     public String toFileString() {

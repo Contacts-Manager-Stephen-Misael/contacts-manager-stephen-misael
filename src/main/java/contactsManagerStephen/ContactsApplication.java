@@ -14,24 +14,51 @@ public class ContactsApplication {
     private static Input input = new Input();
     private static final String contactsFilePath = ("contacts.txt");
 
-    private static final List<Contact> contactList = new ArrayList<>();
+    private static ArrayList<Contact> contactObjectList = new ArrayList<>();
+
+    private static List<String> contactStringList = new ArrayList<>();
 
     public static void main(String[] args) {
-        //reads from the contacts file and prints to the CLI all the contacts that exist in the
-        readContactInfoFromFile();
-
-        //shows main menu and give user options
-        //perform user choice by calling a method that alters the list
+        //creates file if nonexistent, if exists, run the method to get data from file
+        checkContactsFile();
+        //prints contact objects that were converted by previous method
+        printContacts();
+        //shows main menu and give user options and perform user choice
         doUserChoice();
     }
-
-    private static void readContactInfoFromFile() {
-        ArrayList<Contact> contacts = new ArrayList<>(); //used to store the contacts from the file strings
-
-        ContactsToFromFile printToCLIFromFile = new ContactsToFromFile();
-        printToCLIFromFile.printContactsFile(contactsFilePath, contacts);
-
+    private static void checkContactsFile() {
+        Path contactFile = Paths.get(contactsFilePath);
+        try {
+            Files.createFile(contactFile);
+        } catch (FileAlreadyExistsException e) {
+            getStringDataFromFile();
+        } catch (IOException e) {
+            System.out.println("createFile Exception: " + e.getMessage());
+        }
     }
+
+    private static void getStringDataFromFile() {
+        Path contactFile = Paths.get(contactsFilePath);
+        try {
+            contactStringList = Files.readAllLines(contactFile);
+        } catch (IOException e) {
+            System.out.println("file read exception: " + e.getMessage());
+        }
+
+        for (String fileString : contactStringList) {
+            Contact newContact = Contact.fromFileString(fileString);
+            contactObjectList.add(newContact);
+        }
+    }
+
+    private static void printContacts() {
+        System.out.println("Your Contacts!");
+        for (Contact contact: contactObjectList) {
+            System.out.println(contact);
+        }
+        System.out.println();
+    }
+
 
     private static void printMenu() {
         System.out.println("""
@@ -47,7 +74,7 @@ public class ContactsApplication {
             printMenu();
             int userChoice = input.getInt(1, 5, "Enter your numeric option (1-5): ");
             switch (userChoice) {
-                case 1 -> readContactInfoFromFile();
+                case 1 -> printContacts();
                 case 2 -> addNewContact();
                 case 3 -> System.out.println("search by name");
                 case 4 -> System.out.println("delete existing contact");
@@ -60,10 +87,17 @@ public class ContactsApplication {
     }
 
     private static void addNewContact() {
+        Contact userContact = new Contact();
         String userFirstName = input.getString("Enter first name: ");
         String userLastName = input.getString("Enter last name: ");
         String userPhoneNum = input.getString("Enter 10 digit phone number e.g 5555555555");
-        Contact userContact = new Contact(userFirstName, userLastName, userPhoneNum);
-        contactList.add(userContact);
+        if(userFirstName.equals("")) {
+            userContact = new Contact(userFirstName, userPhoneNum);
+        } else if (userLastName.equals("")) {
+            userContact = new Contact(userLastName, userPhoneNum);
+        } else {
+            userContact = new Contact(userFirstName, userLastName, userPhoneNum);
+        }
+        contactObjectList.add(userContact);
     }
 }
