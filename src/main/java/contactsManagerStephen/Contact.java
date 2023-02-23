@@ -12,6 +12,11 @@ public class Contact {
         this.firstName = firstName;
     }
 
+    public Contact(String firstName, String phoneNumber) {
+        this.firstName = firstName;
+        this.phoneNumber = phoneNumber;
+    }
+
     public Contact(String firstName, String lastName, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -24,11 +29,11 @@ public class Contact {
     }
 
     public String toFileString() {
-        return String.format("%s,%s,%s", firstName, lastName, phoneNumber);
+        return String.format("%s %s %s", firstName, lastName, phoneNumber);
     }
 
     public static Contact fromFileString(String fileContact) {
-        String[] contactPieces = fileContact.split(",");
+        String[] contactPieces = fileContact.split(" ");
         Contact contact = new Contact(contactPieces[0]);
         contact.setLastName(contactPieces[1]);
         contact.setPhoneNumber(contactPieces[2]);
