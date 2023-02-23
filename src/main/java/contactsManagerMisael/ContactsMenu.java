@@ -1,5 +1,7 @@
 package contactsManagerMisael;
 
+import colors.Colors;
+
 import java.util.Scanner;
 
 public class ContactsMenu {
@@ -29,26 +31,66 @@ public class ContactsMenu {
 
 
 
+//    public int showMainMenu() {
+////        System.out.println("1. View contacts.");
+//        System.out.println(Colors.bold + Colors.blue + "1. View contacts." + Colors.reset);
+//        System.out.println(Colors.bold + Colors.blue + "2. View contacts." + Colors.reset);
+//        System.out.println(Colors.bold + Colors.blue + "3. View contacts." + Colors.reset);
+//        System.out.println(Colors.bold + Colors.blue + "4. View contacts." + Colors.reset);
+//        System.out.println(Colors.bold + Colors.blue + "5. Exit." + Colors.reset);
+////        System.out.print("Enter an option (1, 2, 3, 4 or 5): ");
+//        System.out.println(Colors.bold + Colors.brightYellow + "Enter an option (1, 2, 3, 4 or 5): " + Colors.reset);
+//
+//        String input = scanner.nextLine();
+//        while (!input.matches("[1-5]")) {
+//            System.out.println("Invalid input. Please enter a number between 1 and 5.");
+//            System.out.print("Enter an option (1, 2, 3, 4 or 5): ");
+//            input = scanner.nextLine();
+//        }
+//        return Integer.parseInt(input);
+//    }
+
+
+
+
+
     public int showMainMenu() {
-        System.out.println("1. View contacts.");
-        System.out.println("2. Add a new contact.");
-        System.out.println("3. Search a contact by name.");
-        System.out.println("4. Delete an existing contact.");
-        System.out.println("5. Exit.");
-        System.out.print("Enter an option (1, 2, 3, 4 or 5): ");
+        ConsoleHelper consoleHelper = new ConsoleHelper();
+        consoleHelper.print("Loading menu");
+        for (int i = 0; i < 5; i++) {
+            consoleHelper.animate(".");
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        consoleHelper.print("");
+        System.out.println(Colors.bold + Colors.blue + "1. View contacts." + Colors.reset);
+        System.out.println(Colors.bold + Colors.blue + "2. Add a new contact." + Colors.reset);
+        System.out.println(Colors.bold + Colors.blue + "3. Search a contact by name." + Colors.reset);
+        System.out.println(Colors.bold + Colors.blue + "4. Delete an existing contact." + Colors.reset);
+        System.out.println(Colors.bold + Colors.blue + "5. Exit." + Colors.reset);
+        System.out.println(Colors.bold + Colors.brightYellow + "Enter an option (1, 2, 3, 4 or 5): " + Colors.reset);
+
         String input = scanner.nextLine();
         while (!input.matches("[1-5]")) {
             System.out.println("Invalid input. Please enter a number between 1 and 5.");
             System.out.print("Enter an option (1, 2, 3, 4 or 5): ");
-//            input = scanner.nextLine();
+            input = scanner.nextLine();
         }
         return Integer.parseInt(input);
     }
 
 
 
+
+
+
+
+
     public Contact getNewContactInfo() {
-        scanner.nextLine();
+//        scanner.nextLine();
         System.out.print("Enter name: ");
         String name = scanner.nextLine();
         System.out.print("Enter phone number: ");
@@ -57,13 +99,13 @@ public class ContactsMenu {
     }
 
     public String getSearchQuery() {
-        scanner.nextLine();
+//        scanner.nextLine();
         System.out.print("Enter search query: ");
         return scanner.nextLine();
     }
 
     public Contact getContactToDelete() {
-        scanner.nextLine();
+//        scanner.nextLine();
         System.out.print("Enter name of contact to delete: ");
         String name = scanner.nextLine();
         System.out.print("Enter phone number of contact to delete: ");

@@ -2,6 +2,8 @@ package contactsManagerMisael;
 
 
 
+import colors.Colors;
+
 import java.util.List;
 
 public class ContactsManager {
@@ -22,7 +24,9 @@ public class ContactsManager {
     public void addContact(Contact contact) {
         if (!contacts.contains(contact)) {
             contacts.add(contact);
-            System.out.println("Contact added successfully!");
+//            System.out.println("Contact added successfully!");
+            System.out.println(Colors.red + "Contact deleted successfully!" + Colors.reset);
+
         } else {
             System.out.println("A contact with that name already exists. Please choose a different name.");
         }
@@ -37,7 +41,9 @@ public class ContactsManager {
             }
         }
         if (!found) {
-            System.out.println("No contacts with that name were found.");
+//            System.out.println("No contacts with that name were found.");
+            System.out.println(Colors.red + "No contacts with that name were found." + Colors.reset);
+
         }
     }
 
