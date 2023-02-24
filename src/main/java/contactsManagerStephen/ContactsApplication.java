@@ -55,12 +55,13 @@ public class ContactsApplication {
 
     private static void printContacts() {
         System.out.println("""
-                Name               |Phone Number     |
-                -------------------------------------|""");
+                -----------------------------------------------|
+                           Name          |     Phone Number    |
+                -----------------------------------------------|""");
         for (Contact contact : contactObjectList) {
-            System.out.format("%s %s    | %s     |%n", contact.getFirstName(), contact.getLastName(), contact.formatPhoneNumber(contact.getPhoneNumber()));
+            System.out.format("%-12s %-7s     |     %-15s |%n", contact.getFirstName(), contact.getLastName(), contact.formatPhoneNumber(contact.getPhoneNumber()));
         }
-        System.out.println("--------------------------------------");
+        System.out.println("------------------------------------------------\n");
     }
 
     private static void printMenu() {
@@ -81,9 +82,7 @@ public class ContactsApplication {
             System.out.println();
             switch (userChoice) {
                 case 1 -> printContacts();
-                //add verification if contact already exists
                 case 2 -> addNewContact();
-                //add verification to search if the person does not exist
                 case 3 -> searchContacts();
                 //edit delete method so that the user can type and THEN is given a list of options if duplicate
                 case 4 -> deleteContact();
@@ -100,41 +99,64 @@ public class ContactsApplication {
         String userFirstName = input.getString("Enter first name: ");
         String userLastName = input.getString("Enter last name: ");
         String userPhoneNum = input.getString("Enter 10 digit phone number e.g 5555555555");
-        if (userFirstName.equals("")) {
-            userContact = new Contact(userFirstName, userPhoneNum);
-        } else if (userLastName.equals("")) {
+        //checks to see if contact exists
+        for (Contact contact : contactObjectList) {
+            if (contact.getFirstName().equalsIgnoreCase(userFirstName) && contact.getLastName().equalsIgnoreCase(userLastName)) {
+                System.out.println("This contact already exists! Please try again\n");
+                return;
+            }
+            if (contact.getPhoneNumber().equals(userPhoneNum)) {
+                System.out.println("This phone number is already stored for another contact! Please try again\n");
+                return;
+            }
+        }
+        //checks and implements if last name or first name was entered as an empty string
+        if (userFirstName.equals("") && !userLastName.equals("")) {
             userContact = new Contact(userLastName, userPhoneNum);
+        } else if (userLastName.equals("") && !userFirstName.equals("")) {
+            userContact = new Contact(userFirstName, userPhoneNum);
         } else {
             userContact = new Contact(userFirstName, userLastName, userPhoneNum);
         }
+        System.out.println("Contact added successfully!");
         contactObjectList.add(userContact);
     }
 
     private static void searchContacts() {
         String userSearch = input.getString("Search for a user by name or phone number:");
+        boolean contactExists = false;
+        System.out.println("~~~Results for your Search~~~");
         for (Contact contact : contactObjectList) {
-            if (contact.getFirstName().equals(userSearch)) {
-                System.out.println(contact);
-            } else if (contact.getLastName().equals(userSearch)) {
-                System.out.println(contact);
-            } else if (contact.getPhoneNumber().equals(userSearch)) {
-                System.out.println(contact);
+            if (contact.getFirstName().equalsIgnoreCase(userSearch) || contact.getLastName().equalsIgnoreCase(userSearch) || contact.getPhoneNumber().equals(userSearch)) {
+                System.out.format("%-12s %-7s     |     %-15s |%n", contact.getFirstName(), contact.getLastName(), contact.formatPhoneNumber(contact.getPhoneNumber()));
+                contactExists = true;
             }
         }
         System.out.println();
+        if (!contactExists) {
+            System.out.println("No contacts found within search criteria\n");
+        }
     }
 
     private static void deleteContact() {
         if (contactObjectList.size() > 0) {
             //prints list of contacts with numbers
             int i = 1;
-            System.out.println("~~Existing contacts to choose from~~");
+            System.out.println("""
+                          ~~Existing contacts to choose from~~
+                    --------------------------------------------------|""");
             for (Contact contact : contactObjectList) {
-                System.out.format("%d. %s%n", i++, contact);
+                System.out.format("%d. %-12s %-7s     |     %-15s |%n", i++, contact.getFirstName(), contact.getLastName(), contact.formatPhoneNumber(contact.getPhoneNumber()));
             }
+            System.out.println("--------------------------------------------------|");
 
             //deletes contact based on index of object:ist of Contacts
             int userDelete = input.getInt(1, contactObjectList.size(), "Choose number to delete: ");
+            for (Contact contact : contactObjectList) {
+                if (userDelete == contactObjectList.indexOf(contact) + 1) {
+                    System.out.format("Contact to delete:| %s %s | %s |%n", contact.getFirstName(), contact.getLastName(), contact.formatPhoneNumber(contact.getPhoneNumber()));
+                }
+            }
             if (input.yesNo("Confirm Delete [Y/N]: ")) {
                 contactObjectList.remove(userDelete - 1);
             } else {

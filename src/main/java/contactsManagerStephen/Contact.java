@@ -14,6 +14,7 @@ public class Contact {
 
     public Contact(String firstName, String phoneNumber) {
         this.firstName = firstName;
+        this.lastName = getLastName();
         this.phoneNumber = phoneNumber;
     }
 
